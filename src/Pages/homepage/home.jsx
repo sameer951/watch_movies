@@ -6,9 +6,10 @@ import { BaseReducer, Type } from './../../store/reducers';
 import { connect } from 'react-redux';
 import { MovieCard } from '../../components/moviecard.component';
 import { Box } from '@material-ui/core';
+import Pagination from '@material-ui/lab/Pagination';
 class Home extends React.Component {
 
-    state = { searchResults: [], searchQuery: '' };
+    state = { searchResults: [], searchQuery: '', curentPage: 1, totalPage: 1 };
 
     searchMovie(input) {
         let search_url = `${BASE_URL}/search/movie`;
@@ -24,18 +25,25 @@ class Home extends React.Component {
         }).catch(err => { console.log(err); })
             .finally(() => { this.props.is_loading(false); })
     }
-    getPopularMovies() {
+    getPopularMovies(page = 1) {
         let url = `${BASE_URL}/movie/popular`;
-        let config = { params: { api_key: URL_API_KEY } };
+        let config = { params: { api_key: URL_API_KEY, page } };
         let { popularData } = this.props.base;
-        if (!popularData) {
+        const { curentPage } = this.state;
+        if (!popularData || curentPage !== page) {
             this.props.is_loading(true);
             Axios.get(url, config).then((res) => {
                 if (res.data) {
+                    const { total_pages, page, results } = res.data;
+                    this.setState({ ...this.state, totalPage: total_pages, curentPage: page });
+                    localStorage.setItem('tot_page', total_pages);
                     this.props.updatePopularList(res.data.results)
                 }
             }).catch(err => { console.log(err); })
                 .finally(() => { this.props.is_loading(false); })
+        } else {
+            let total_pages = localStorage?.getItem('tot_page');
+            this.setState({ ...this.state, totalPage: total_pages, curentPage: page });
         }
 
     }
@@ -61,6 +69,7 @@ class Home extends React.Component {
                             <MovieCard movie={movie} history={this.props.history}></MovieCard>
                         </Box>))}
                 </FlexBox>
+                <Pagination count={this.state.totalPage} onChange={(e, page) => { this.getPopularMovies(page) }} variant="outlined" shape="rounded" />
             </div> :
                 <div>
                     <h1 style={{
@@ -78,6 +87,8 @@ class Home extends React.Component {
         </div>)
     }
 }
+
+
 
 
 
