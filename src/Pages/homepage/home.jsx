@@ -30,7 +30,7 @@ class Home extends React.Component {
         let config = { params: { api_key: URL_API_KEY, page } };
         let { popularData } = this.props.base;
         const { curentPage } = this.state;
-        if (!popularData || curentPage !== page) {
+        if (!popularData || curentPage !== page || curentPage === 1) {
             this.props.is_loading(true);
             Axios.get(url, config).then((res) => {
                 if (res.data) {
