@@ -62,19 +62,21 @@ function ButtonAppBar({ base, updateUser, ...props }) {
             <div id="simple-modal-description">
                 <form action="#" >
                     <TextField id="Enter-Name" label="Enter Your Name" color="secondary" onChange={(e) => {
-                        console.log(e.target.value);
                         setFormState({ ...formState, name: e.target.value });
                     }} />
                     <TextField id="Enter-Name" label="Enter Mail Id" color="secondary" onChange={(e) => {
-                        console.log(e.target.value);
                         setFormState({ ...formState, mail: e.target.value })
                     }} />
 
                     <button type="submit" style={{ margin: 20 }} onClick={(e) => {
                         e.preventDefault();
-                        console.log(formState);
                         const { name, mail } = formState;
                         if (name?.trim() && mail?.trim()) {
+                            let isValEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(mail);
+                            if (!isValEmail) {
+                                toast.warn('Please Enter A Valid Mail');
+                                return '';
+                            }
                             setUserData({ ...formState, favorites: [] });
                             setFormState({});
                             handleOpen(false);
@@ -108,7 +110,7 @@ function ButtonAppBar({ base, updateUser, ...props }) {
                             onClick={() => {
                                 setUserData({});
                                 localStorage.removeItem('user');
-                            }}>Logout</Button>}
+                            }}><Link to="/" className={classes.links}>Logout</Link></Button>}
                 </Toolbar>
             </AppBar>
             <Modal

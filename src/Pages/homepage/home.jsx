@@ -18,10 +18,8 @@ class Home extends React.Component {
                 query: input
             }
         }
-        // console.log(input, URL_API_KEY);
         this.props.is_loading(true);
         Axios.get(search_url, config).then((res) => {
-            // console.log("res==>", res);
             this.setState((prevState) => { return { ...prevState, searchResults: res.data.results, searchQuery: input } });
         }).catch(err => { console.log(err); })
             .finally(() => { this.props.is_loading(false); })
@@ -30,11 +28,9 @@ class Home extends React.Component {
         let url = `${BASE_URL}/movie/popular`;
         let config = { params: { api_key: URL_API_KEY } };
         let { popularData } = this.props.base;
-        // console.log(popularData);
         if (!popularData) {
             this.props.is_loading(true);
             Axios.get(url, config).then((res) => {
-                // console.log("res==>", res);
                 if (res.data) {
                     this.props.updatePopularList(res.data.results)
                 }
@@ -50,7 +46,6 @@ class Home extends React.Component {
     render() {
         let { popularData, user } = this.props.base;
         let { searchResults, searchQuery } = this.state;
-        console.log(this.props);
         return (<div>
             <SearchInput placeholder={'Search for a movie, tv show ......'} triggerSearch={this.searchMovie.bind(this)}
                 triggerClear={() => { this.setState({ ...this.state, searchQuery: '' }) }}></SearchInput>

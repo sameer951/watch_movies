@@ -8,16 +8,16 @@ class Favorite extends React.Component {
 
 
     render() {
-        let { popularData, user: { favorites } } = this.props.base;
+        let { popularData, user } = this.props.base;
         return (<div>
-            {favorites?.length ? <div>
+            {user?.favorites?.length ? <div>
                 <h1 style={{
                     textAlign: 'center',
                     "fontFamily": `"Roboto", "Helvetica", "Arial", sans-serif`,
                     margin: '4px'
                 }}>My Favorite Movies</h1>
                 <FlexBox>
-                    {favorites?.length && favorites.map((movie, index) => (
+                    {user?.favorites?.length && user?.favorites.map((movie, index) => (
                         <Box p={1} key={`movie${index}`} width={247}>
                             <MovieCard movie={movie} history={this.props.history}></MovieCard>
                         </Box>))}
