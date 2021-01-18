@@ -1,4 +1,3 @@
-import Axios from 'axios';
 import React from 'react';
 import { BaseReducer, Type } from '../../store/reducers';
 import { connect } from 'react-redux';
@@ -8,7 +7,7 @@ class Favorite extends React.Component {
 
 
     render() {
-        let { popularData, user } = this.props.base;
+        let { user } = this.props.base;
         return (<div>
             {user?.favorites?.length ? <div>
                 <h1 style={{

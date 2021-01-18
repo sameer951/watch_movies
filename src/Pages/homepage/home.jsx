@@ -44,7 +44,7 @@ class Home extends React.Component {
         this.getPopularMovies();
     }
     render() {
-        let { popularData, user } = this.props.base;
+        let { popularData } = this.props.base;
         let { searchResults, searchQuery } = this.state;
         return (<div>
             <SearchInput placeholder={'Search for a movie, tv show ......'} triggerSearch={this.searchMovie.bind(this)}

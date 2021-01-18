@@ -3,11 +3,9 @@ import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
 import { connect } from 'react-redux';
 import { BaseReducer, Type } from '../store/reducers';
 
@@ -42,10 +40,10 @@ function ViewCard(props) {
      
         poster_path, release_date, title, id
     } = props.movie;
-    const { base, base: { user }, updateUser, movie } = props;
+    const {  base: { user }, updateUser, movie } = props;
     const onFavClick = (e) => {
         e.stopPropagation();
-        let isInclude = user?.favorites?.find(mv => id == mv.id);
+        let isInclude = user?.favorites?.find(mv => id === mv.id);
         let fav = [...user.favorites];
         if (isInclude) {
             fav = user.favorites.filter(mv => id !== mv.id);
@@ -66,7 +64,7 @@ function ViewCard(props) {
                     <strong className={classes.title}>{title}</strong>
                     <div>{release_date} <span>
                         {user?.name?.trim() && <IconButton aria-label="add to favorites" onClick={onFavClick}>
-                            <FavoriteIcon className={user?.favorites?.find(mv => id == mv.id) ? classes.errorIcon : ''} />
+                            <FavoriteIcon className={user?.favorites?.find(mv => id === mv.id) ? classes.errorIcon : ''} />
                         </IconButton>}
                     </span>
                     </div>

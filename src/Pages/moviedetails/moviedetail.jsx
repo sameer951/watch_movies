@@ -8,12 +8,9 @@ const useStyles = makeStyles((theme) =>
         root: {
             height: "100vh",
             position: "fixed",
-            // position: 'absolute',
             top: 0, left: 0,
             width: "100vw",
             opacity: 0.3,
-            // transform: "translate(-10vw,-20vh)",
-            backgroundSize: "100%",
             backgroundRepeat: "no-repeat",
             backgroundSize: 'cover',
         },
