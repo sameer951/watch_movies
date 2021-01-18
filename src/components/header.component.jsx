@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -7,6 +7,7 @@ import { Modal, TextField, Typography } from '@material-ui/core';
 import { toast } from 'react-toastify';
 import { connect } from 'react-redux';
 import { BaseReducer, Type } from '../store/reducers';
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -29,6 +30,7 @@ const useStyles = makeStyles((theme) =>
             boxShadow: theme.shadows[5],
             padding: theme.spacing(2, 4, 3),
         },
+        links: { color: 'white', textDecoration: 'none' }
     }),
 );
 function getModalStyle() {
@@ -96,6 +98,8 @@ function ButtonAppBar({ base, updateUser, ...props }) {
         <div className={classes.root} >
             <AppBar position="static">
                 <Toolbar>
+                    <Typography > <Link to="/" className={classes.links}>Home</Link>  &nbsp; &nbsp;</Typography>
+                    {userData?.name && <Typography > <Link to="/fav" className={classes.links}>My Favorites</Link></Typography>}
                     <Typography variant="h6" className={classes.title}></Typography>
                     {userData?.name && <Typography variant="h6" > Hello {userData?.name} &nbsp;</Typography>}
                     {!userData?.name ? <Button color="inherit" className={classes.loginButton}
